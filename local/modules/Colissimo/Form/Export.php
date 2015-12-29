@@ -14,16 +14,11 @@ namespace Colissimo\Form;
 
 use Colissimo\Colissimo;
 use Colissimo\Model\ColissimoQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ExecutionContextInterface;
 use Thelia\Core\Translation\Translator;
 use Thelia\Form\BaseForm;
-use Thelia\Model\OrderQuery;
-use Thelia\Model\OrderStatus;
-use Thelia\Model\OrderStatusQuery;
-
 
 /**
  * Class Export
@@ -59,35 +54,50 @@ class Export extends BaseForm
             ->find();
 
         $this->formBuilder
-            ->add('status_id', 'text',[
-                'constraints' => [
-                    new NotBlank(),
-                    new Callback(array(
-                        "methods" => array(
-                            array($this,
-                                "verifyValue")
+            ->add(
+                'status_id',
+                'text',
+                [
+                    'constraints' => [
+                        new NotBlank(),
+                        new Callback(
+                            array("methods" => array(array($this, "verifyValue")))
                         )
-                    ))
-                ],
-                'label' => Translator::getInstance()->trans('Modify status export after export', [], Colissimo::MESSAGE_DOMAIN),
-                'label_attr' => [
+                    ],
+                    'label' => Translator::getInstance()->trans(
+                        'Modify status export after export',
+                        [],
+                        Colissimo::MESSAGE_DOMAIN
+                    ),
+                    'label_attr' => [
                     'for' => 'status_id'
+                    ]
                 ]
-            ]);
+            );
 
         /** @var \Thelia\Model\Order $order */
         foreach ($orders as $order) {
-            $this->formBuilder->add("order_".$order->getId(), "checkbox", array(
+            $this->formBuilder->add(
+                "order_".$order->getId(),
+                "checkbox",
+                array(
                     'label'=>$order->getRef(),
                     'label_attr'=>array('for'=>'export_'.$order->getId())
-                ));
+                )
+            );
         }
     }
 
     public function verifyValue($value, ExecutionContextInterface $context)
     {
-        if (!preg_match("#^nochange|processing|sent$#",$value)) {
-            $context->addViolation(Translator::getInstance()->trans('select a valid status', [], Colissimo::MESSAGE_DOMAIN));
+        if (!preg_match("#^nochange|processing|sent$#", $value)) {
+            $context->addViolation(
+                Translator::getInstance()->trans(
+                    'select a valid status',
+                    [],
+                    Colissimo::MESSAGE_DOMAIN
+                )
+            );
         }
     }
 
