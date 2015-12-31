@@ -115,7 +115,6 @@
     <column name="chapo" type="LONGVARCHAR" />
     <column name="postscriptum" type="LONGVARCHAR" />
     <column defaultValue="0" name="by_default" type="TINYINT" />
-    <column defaultValue="0" name="shop_country" required="true" type="BOOLEAN" />
     <index name="idx_country_by_default">
       <index-column name="by_default" />
     </index>

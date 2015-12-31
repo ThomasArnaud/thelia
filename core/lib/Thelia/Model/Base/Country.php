@@ -136,13 +136,6 @@ abstract class Country implements ActiveRecordInterface
     protected $by_default;
 
     /**
-     * The value for the shop_country field.
-     * Note: this column has a database default value of: false
-     * @var        boolean
-     */
-    protected $shop_country;
-
-    /**
      * The value for the created_at field.
      * @var        string
      */
@@ -317,7 +310,6 @@ abstract class Country implements ActiveRecordInterface
         $this->has_states = 0;
         $this->need_zip_code = 0;
         $this->by_default = 0;
-        $this->shop_country = false;
     }
 
     /**
@@ -680,17 +672,6 @@ abstract class Country implements ActiveRecordInterface
     }
 
     /**
-     * Get the [shop_country] column value.
-     *
-     * @return   boolean
-     */
-    public function getShopCountry()
-    {
-
-        return $this->shop_country;
-    }
-
-    /**
      * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
@@ -920,35 +901,6 @@ abstract class Country implements ActiveRecordInterface
     } // setByDefault()
 
     /**
-     * Sets the value of the [shop_country] column.
-     * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
-     * @param      boolean|integer|string $v The new value
-     * @return   \Thelia\Model\Country The current object (for fluent API support)
-     */
-    public function setShopCountry($v)
-    {
-        if ($v !== null) {
-            if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-            } else {
-                $v = (boolean) $v;
-            }
-        }
-
-        if ($this->shop_country !== $v) {
-            $this->shop_country = $v;
-            $this->modifiedColumns[CountryTableMap::SHOP_COUNTRY] = true;
-        }
-
-
-        return $this;
-    } // setShopCountry()
-
-    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param      mixed $v string, integer (timestamp), or \DateTime value.
@@ -1016,10 +968,6 @@ abstract class Country implements ActiveRecordInterface
                 return false;
             }
 
-            if ($this->shop_country !== false) {
-                return false;
-            }
-
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1074,16 +1022,13 @@ abstract class Country implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : CountryTableMap::translateFieldName('ByDefault', TableMap::TYPE_PHPNAME, $indexType)];
             $this->by_default = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : CountryTableMap::translateFieldName('ShopCountry', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->shop_country = (null !== $col) ? (boolean) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : CountryTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : CountryTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, '\DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : CountryTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : CountryTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -1096,7 +1041,7 @@ abstract class Country implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 12; // 12 = CountryTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = CountryTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating \Thelia\Model\Country object", 0, $e);
@@ -1579,9 +1524,6 @@ abstract class Country implements ActiveRecordInterface
         if ($this->isColumnModified(CountryTableMap::BY_DEFAULT)) {
             $modifiedColumns[':p' . $index++]  = '`BY_DEFAULT`';
         }
-        if ($this->isColumnModified(CountryTableMap::SHOP_COUNTRY)) {
-            $modifiedColumns[':p' . $index++]  = '`SHOP_COUNTRY`';
-        }
         if ($this->isColumnModified(CountryTableMap::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`CREATED_AT`';
         }
@@ -1625,9 +1567,6 @@ abstract class Country implements ActiveRecordInterface
                         break;
                     case '`BY_DEFAULT`':
                         $stmt->bindValue($identifier, $this->by_default, PDO::PARAM_INT);
-                        break;
-                    case '`SHOP_COUNTRY`':
-                        $stmt->bindValue($identifier, (int) $this->shop_country, PDO::PARAM_INT);
                         break;
                     case '`CREATED_AT`':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1725,12 +1664,9 @@ abstract class Country implements ActiveRecordInterface
                 return $this->getByDefault();
                 break;
             case 9:
-                return $this->getShopCountry();
-                break;
-            case 10:
                 return $this->getCreatedAt();
                 break;
-            case 11:
+            case 10:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1771,9 +1707,8 @@ abstract class Country implements ActiveRecordInterface
             $keys[6] => $this->getNeedZipCode(),
             $keys[7] => $this->getZipCodeFormat(),
             $keys[8] => $this->getByDefault(),
-            $keys[9] => $this->getShopCountry(),
-            $keys[10] => $this->getCreatedAt(),
-            $keys[11] => $this->getUpdatedAt(),
+            $keys[9] => $this->getCreatedAt(),
+            $keys[10] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1867,12 +1802,9 @@ abstract class Country implements ActiveRecordInterface
                 $this->setByDefault($value);
                 break;
             case 9:
-                $this->setShopCountry($value);
-                break;
-            case 10:
                 $this->setCreatedAt($value);
                 break;
-            case 11:
+            case 10:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1908,9 +1840,8 @@ abstract class Country implements ActiveRecordInterface
         if (array_key_exists($keys[6], $arr)) $this->setNeedZipCode($arr[$keys[6]]);
         if (array_key_exists($keys[7], $arr)) $this->setZipCodeFormat($arr[$keys[7]]);
         if (array_key_exists($keys[8], $arr)) $this->setByDefault($arr[$keys[8]]);
-        if (array_key_exists($keys[9], $arr)) $this->setShopCountry($arr[$keys[9]]);
-        if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
-        if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
+        if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+        if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
     }
 
     /**
@@ -1931,7 +1862,6 @@ abstract class Country implements ActiveRecordInterface
         if ($this->isColumnModified(CountryTableMap::NEED_ZIP_CODE)) $criteria->add(CountryTableMap::NEED_ZIP_CODE, $this->need_zip_code);
         if ($this->isColumnModified(CountryTableMap::ZIP_CODE_FORMAT)) $criteria->add(CountryTableMap::ZIP_CODE_FORMAT, $this->zip_code_format);
         if ($this->isColumnModified(CountryTableMap::BY_DEFAULT)) $criteria->add(CountryTableMap::BY_DEFAULT, $this->by_default);
-        if ($this->isColumnModified(CountryTableMap::SHOP_COUNTRY)) $criteria->add(CountryTableMap::SHOP_COUNTRY, $this->shop_country);
         if ($this->isColumnModified(CountryTableMap::CREATED_AT)) $criteria->add(CountryTableMap::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(CountryTableMap::UPDATED_AT)) $criteria->add(CountryTableMap::UPDATED_AT, $this->updated_at);
 
@@ -2005,7 +1935,6 @@ abstract class Country implements ActiveRecordInterface
         $copyObj->setNeedZipCode($this->getNeedZipCode());
         $copyObj->setZipCodeFormat($this->getZipCodeFormat());
         $copyObj->setByDefault($this->getByDefault());
-        $copyObj->setShopCountry($this->getShopCountry());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -4724,7 +4653,6 @@ abstract class Country implements ActiveRecordInterface
         $this->need_zip_code = null;
         $this->zip_code_format = null;
         $this->by_default = null;
-        $this->shop_country = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

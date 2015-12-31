@@ -58,7 +58,7 @@ class CountryTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 12;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -68,7 +68,7 @@ class CountryTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 12;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the ID field
@@ -116,11 +116,6 @@ class CountryTableMap extends TableMap
     const BY_DEFAULT = 'country.BY_DEFAULT';
 
     /**
-     * the column name for the SHOP_COUNTRY field
-     */
-    const SHOP_COUNTRY = 'country.SHOP_COUNTRY';
-
-    /**
      * the column name for the CREATED_AT field
      */
     const CREATED_AT = 'country.CREATED_AT';
@@ -151,12 +146,12 @@ class CountryTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Visible', 'Isocode', 'Isoalpha2', 'Isoalpha3', 'HasStates', 'NeedZipCode', 'ZipCodeFormat', 'ByDefault', 'ShopCountry', 'CreatedAt', 'UpdatedAt', ),
-        self::TYPE_STUDLYPHPNAME => array('id', 'visible', 'isocode', 'isoalpha2', 'isoalpha3', 'hasStates', 'needZipCode', 'zipCodeFormat', 'byDefault', 'shopCountry', 'createdAt', 'updatedAt', ),
-        self::TYPE_COLNAME       => array(CountryTableMap::ID, CountryTableMap::VISIBLE, CountryTableMap::ISOCODE, CountryTableMap::ISOALPHA2, CountryTableMap::ISOALPHA3, CountryTableMap::HAS_STATES, CountryTableMap::NEED_ZIP_CODE, CountryTableMap::ZIP_CODE_FORMAT, CountryTableMap::BY_DEFAULT, CountryTableMap::SHOP_COUNTRY, CountryTableMap::CREATED_AT, CountryTableMap::UPDATED_AT, ),
-        self::TYPE_RAW_COLNAME   => array('ID', 'VISIBLE', 'ISOCODE', 'ISOALPHA2', 'ISOALPHA3', 'HAS_STATES', 'NEED_ZIP_CODE', 'ZIP_CODE_FORMAT', 'BY_DEFAULT', 'SHOP_COUNTRY', 'CREATED_AT', 'UPDATED_AT', ),
-        self::TYPE_FIELDNAME     => array('id', 'visible', 'isocode', 'isoalpha2', 'isoalpha3', 'has_states', 'need_zip_code', 'zip_code_format', 'by_default', 'shop_country', 'created_at', 'updated_at', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+        self::TYPE_PHPNAME       => array('Id', 'Visible', 'Isocode', 'Isoalpha2', 'Isoalpha3', 'HasStates', 'NeedZipCode', 'ZipCodeFormat', 'ByDefault', 'CreatedAt', 'UpdatedAt', ),
+        self::TYPE_STUDLYPHPNAME => array('id', 'visible', 'isocode', 'isoalpha2', 'isoalpha3', 'hasStates', 'needZipCode', 'zipCodeFormat', 'byDefault', 'createdAt', 'updatedAt', ),
+        self::TYPE_COLNAME       => array(CountryTableMap::ID, CountryTableMap::VISIBLE, CountryTableMap::ISOCODE, CountryTableMap::ISOALPHA2, CountryTableMap::ISOALPHA3, CountryTableMap::HAS_STATES, CountryTableMap::NEED_ZIP_CODE, CountryTableMap::ZIP_CODE_FORMAT, CountryTableMap::BY_DEFAULT, CountryTableMap::CREATED_AT, CountryTableMap::UPDATED_AT, ),
+        self::TYPE_RAW_COLNAME   => array('ID', 'VISIBLE', 'ISOCODE', 'ISOALPHA2', 'ISOALPHA3', 'HAS_STATES', 'NEED_ZIP_CODE', 'ZIP_CODE_FORMAT', 'BY_DEFAULT', 'CREATED_AT', 'UPDATED_AT', ),
+        self::TYPE_FIELDNAME     => array('id', 'visible', 'isocode', 'isoalpha2', 'isoalpha3', 'has_states', 'need_zip_code', 'zip_code_format', 'by_default', 'created_at', 'updated_at', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -166,12 +161,12 @@ class CountryTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Visible' => 1, 'Isocode' => 2, 'Isoalpha2' => 3, 'Isoalpha3' => 4, 'HasStates' => 5, 'NeedZipCode' => 6, 'ZipCodeFormat' => 7, 'ByDefault' => 8, 'ShopCountry' => 9, 'CreatedAt' => 10, 'UpdatedAt' => 11, ),
-        self::TYPE_STUDLYPHPNAME => array('id' => 0, 'visible' => 1, 'isocode' => 2, 'isoalpha2' => 3, 'isoalpha3' => 4, 'hasStates' => 5, 'needZipCode' => 6, 'zipCodeFormat' => 7, 'byDefault' => 8, 'shopCountry' => 9, 'createdAt' => 10, 'updatedAt' => 11, ),
-        self::TYPE_COLNAME       => array(CountryTableMap::ID => 0, CountryTableMap::VISIBLE => 1, CountryTableMap::ISOCODE => 2, CountryTableMap::ISOALPHA2 => 3, CountryTableMap::ISOALPHA3 => 4, CountryTableMap::HAS_STATES => 5, CountryTableMap::NEED_ZIP_CODE => 6, CountryTableMap::ZIP_CODE_FORMAT => 7, CountryTableMap::BY_DEFAULT => 8, CountryTableMap::SHOP_COUNTRY => 9, CountryTableMap::CREATED_AT => 10, CountryTableMap::UPDATED_AT => 11, ),
-        self::TYPE_RAW_COLNAME   => array('ID' => 0, 'VISIBLE' => 1, 'ISOCODE' => 2, 'ISOALPHA2' => 3, 'ISOALPHA3' => 4, 'HAS_STATES' => 5, 'NEED_ZIP_CODE' => 6, 'ZIP_CODE_FORMAT' => 7, 'BY_DEFAULT' => 8, 'SHOP_COUNTRY' => 9, 'CREATED_AT' => 10, 'UPDATED_AT' => 11, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'visible' => 1, 'isocode' => 2, 'isoalpha2' => 3, 'isoalpha3' => 4, 'has_states' => 5, 'need_zip_code' => 6, 'zip_code_format' => 7, 'by_default' => 8, 'shop_country' => 9, 'created_at' => 10, 'updated_at' => 11, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Visible' => 1, 'Isocode' => 2, 'Isoalpha2' => 3, 'Isoalpha3' => 4, 'HasStates' => 5, 'NeedZipCode' => 6, 'ZipCodeFormat' => 7, 'ByDefault' => 8, 'CreatedAt' => 9, 'UpdatedAt' => 10, ),
+        self::TYPE_STUDLYPHPNAME => array('id' => 0, 'visible' => 1, 'isocode' => 2, 'isoalpha2' => 3, 'isoalpha3' => 4, 'hasStates' => 5, 'needZipCode' => 6, 'zipCodeFormat' => 7, 'byDefault' => 8, 'createdAt' => 9, 'updatedAt' => 10, ),
+        self::TYPE_COLNAME       => array(CountryTableMap::ID => 0, CountryTableMap::VISIBLE => 1, CountryTableMap::ISOCODE => 2, CountryTableMap::ISOALPHA2 => 3, CountryTableMap::ISOALPHA3 => 4, CountryTableMap::HAS_STATES => 5, CountryTableMap::NEED_ZIP_CODE => 6, CountryTableMap::ZIP_CODE_FORMAT => 7, CountryTableMap::BY_DEFAULT => 8, CountryTableMap::CREATED_AT => 9, CountryTableMap::UPDATED_AT => 10, ),
+        self::TYPE_RAW_COLNAME   => array('ID' => 0, 'VISIBLE' => 1, 'ISOCODE' => 2, 'ISOALPHA2' => 3, 'ISOALPHA3' => 4, 'HAS_STATES' => 5, 'NEED_ZIP_CODE' => 6, 'ZIP_CODE_FORMAT' => 7, 'BY_DEFAULT' => 8, 'CREATED_AT' => 9, 'UPDATED_AT' => 10, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'visible' => 1, 'isocode' => 2, 'isoalpha2' => 3, 'isoalpha3' => 4, 'has_states' => 5, 'need_zip_code' => 6, 'zip_code_format' => 7, 'by_default' => 8, 'created_at' => 9, 'updated_at' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -199,7 +194,6 @@ class CountryTableMap extends TableMap
         $this->addColumn('NEED_ZIP_CODE', 'NeedZipCode', 'TINYINT', false, null, 0);
         $this->addColumn('ZIP_CODE_FORMAT', 'ZipCodeFormat', 'VARCHAR', false, 20, null);
         $this->addColumn('BY_DEFAULT', 'ByDefault', 'TINYINT', false, null, 0);
-        $this->addColumn('SHOP_COUNTRY', 'ShopCountry', 'BOOLEAN', true, 1, false);
         $this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null, null);
     } // initialize()
@@ -397,7 +391,6 @@ class CountryTableMap extends TableMap
             $criteria->addSelectColumn(CountryTableMap::NEED_ZIP_CODE);
             $criteria->addSelectColumn(CountryTableMap::ZIP_CODE_FORMAT);
             $criteria->addSelectColumn(CountryTableMap::BY_DEFAULT);
-            $criteria->addSelectColumn(CountryTableMap::SHOP_COUNTRY);
             $criteria->addSelectColumn(CountryTableMap::CREATED_AT);
             $criteria->addSelectColumn(CountryTableMap::UPDATED_AT);
         } else {
@@ -410,7 +403,6 @@ class CountryTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.NEED_ZIP_CODE');
             $criteria->addSelectColumn($alias . '.ZIP_CODE_FORMAT');
             $criteria->addSelectColumn($alias . '.BY_DEFAULT');
-            $criteria->addSelectColumn($alias . '.SHOP_COUNTRY');
             $criteria->addSelectColumn($alias . '.CREATED_AT');
             $criteria->addSelectColumn($alias . '.UPDATED_AT');
         }

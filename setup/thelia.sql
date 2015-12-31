@@ -114,7 +114,6 @@ CREATE TABLE `country`
     `need_zip_code` TINYINT DEFAULT 0,
     `zip_code_format` VARCHAR(20),
     `by_default` TINYINT DEFAULT 0,
-    `shop_country` TINYINT(1) DEFAULT 0 NOT NULL,
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
