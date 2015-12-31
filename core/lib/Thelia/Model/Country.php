@@ -7,6 +7,7 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Thelia\Core\Event\Country\CountryEvent;
 use Thelia\Core\Event\TheliaEvents;
+use Thelia\Model\Base\ConfigQuery;
 use Thelia\Model\Base\Country as BaseCountry;
 use Thelia\Model\Map\CountryTableMap;
 use Thelia\Core\Translation\Translator;
@@ -132,7 +133,7 @@ class Country extends BaseCountry
      */
     public static function getShopLocation()
     {
-        $dc = CountryQuery::create()->findOneByShopCountry(true);
+        $dc = ConfigQuery::create()->read('store_country', null);
 
         if ($dc == null) {
             throw new \LogicException(Translator::getInstance()->trans("Cannot find the shop country. Please select a shop country."));

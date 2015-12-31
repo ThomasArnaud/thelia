@@ -110,7 +110,6 @@ CREATE TABLE `country`
     `isoalpha2` VARCHAR(2),
     `isoalpha3` VARCHAR(4),
     `by_default` TINYINT DEFAULT 0,
-    `shop_country` TINYINT(1) DEFAULT 0 NOT NULL,
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
